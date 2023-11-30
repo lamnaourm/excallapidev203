@@ -1,23 +1,23 @@
-import logo from './logo.svg';
+import { useDispatch, useSelector } from 'react-redux';
 import './App.css';
+import { useEffect } from 'react';
+import { getProducts } from './redux/ProductSlice';
 
 function App() {
+
+  const dispatch = useDispatch()
+  const loading = useSelector(state => state.loading)
+  const products = useSelector(state => state.products)
+
+  useEffect(() => {
+    dispatch(getProducts())
+  }, [])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+          {loading ? 
+          <h1>Chargement des donnees </h1>
+          : <h1>Nombre de produits {products.length}</h1>
+      }
     </div>
   );
 }
